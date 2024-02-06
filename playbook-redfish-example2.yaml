@@ -1,0 +1,25 @@
+---
+- name: A playbook testing redfish command module
+  hosts: redfish
+  connection: local
+  gather_facts: true
+
+  collections:
+  - community.general
+
+  tasks:
+  - name: Get Manager Services
+    community.general.redfish_info:
+      category: Manager
+      command: GetNetworkProtocols
+      baseuri: "{{ baseuri }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+  
+  - name: Get firmware inventory
+    community.general.redfish_info:
+      category: Update
+      command: GetFirmwareInventory
+      baseuri: "{{ baseuri }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
