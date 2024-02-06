@@ -1,0 +1,16 @@
+---
+- name: Tuesday Challenge
+  hosts: localhost
+  connection: local             # WRONG CONNECTION- "local," not network_cli
+  gather_facts: no
+
+  tasks:                        # WRONG TASK ORDER- make dir first, then file
+   - name: create a directory
+     file: 
+       dest: challenge
+       state: directory         # TYPO- directory, not directry
+ 
+   - name: creating a file      
+     copy:                                 # INDENTATION
+       dest: challenge/challengefile.txt   # ERRORS ON THESE
+       content: "Success!"                 # THREE LINES... also it is "content" NOT "contents"
