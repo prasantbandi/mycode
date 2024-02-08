@@ -1,0 +1,22 @@
+---
+- name: Fetch Pokémon data using the pokeapi module
+  hosts: localhost
+  gather_facts: no
+
+  vars_files:
+    - pokemon_name.yml
+
+  collections:
+    - rzfeeser.pokeapi
+
+  tasks:
+    - name: Using the name of a Pokémon, collect API data
+      rzfeeser.pokeapi.pokeapi_info:
+        resource: pokemon
+        name: "{{ pokemon_name | lower }}"  # | lower is a jinja2 filter; it will force our variable to lowercase
+      register: pokemon_data
+
+    - name: Save Pokémon data to a file
+      ansible.builtin.copy:
+        content: "{{ pokemon_data.pokeapi_json }}"
+        dest: "/home/student/static/{{ pokemon_name }}_data.json"
